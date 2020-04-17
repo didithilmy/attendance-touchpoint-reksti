@@ -12,15 +12,13 @@ import javafx.stage.WindowEvent;
 
 public class Main extends Application {
 
-    public static String roomNo = "9213";
-
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample.fxml"));
         primaryStage.setTitle("PPPMBKPDB");
         primaryStage.setScene(new Scene(root, 480, 320));
-        primaryStage.setFullScreen(true);
-        primaryStage.getScene().setCursor(Cursor.NONE);
+        //primaryStage.setFullScreen(true);
+        //primaryStage.getScene().setCursor(Cursor.NONE);
         primaryStage.show();
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -36,7 +34,6 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        if(args.length > 0) roomNo = args[0];
         launch(args);
     }
 }

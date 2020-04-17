@@ -73,10 +73,11 @@ public class Controller {
     private HumanActionListener humanActionListener;
     Thread matchThread;
     public final static int FP_MATCH_FINGER_ID = 15;
-    public final static String FP_SERIAL_PORT = "/dev/ttyUSB0";
+    public final static String FP_SERIAL_PORT = Config.getInstance().getFpSerialPort();
 
-    private final static String POST_URL = "https://lkaaa.free.beeceptor.com/sync";
-    private final static String POST_PASSWORD = "password";
+    private final static String POST_URL = Config.getInstance().getSyncUrl();
+    private final static String POST_PASSWORD = Config.getInstance().getSyncPassword();
+    private final static String ROOM_NUMBER = Config.getInstance().getRoomNumber();
 
     public void initialize() {
         Timer timer = new Timer("Display Timer");
@@ -121,7 +122,7 @@ public class Controller {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                lblRoom.setText("Ruang " + Main.roomNo);
+                lblRoom.setText("Ruang " + ROOM_NUMBER);
             }
         });
 
@@ -467,7 +468,7 @@ public class Controller {
 
             // Add to record
             if (confident > 20) {
-                RecordManager.getInstance().appendRecord(NIM, Main.roomNo, System.currentTimeMillis() / 1000);
+                RecordManager.getInstance().appendRecord(NIM, ROOM_NUMBER, System.currentTimeMillis() / 1000);
                 unsyncedRecords++;
                 matchFound = true;
 
