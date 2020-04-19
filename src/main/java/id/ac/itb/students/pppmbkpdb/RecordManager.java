@@ -69,9 +69,9 @@ public class RecordManager {
             ResultSet rs = statement.executeQuery("select * from record");
             while (rs.next()) {
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("nim", rs.getString("nim"));
+                jsonObject.put("student_id", rs.getString("nim"));
                 jsonObject.put("id", rs.getString("id"));
-                jsonObject.put("timestamp", rs.getLong("time"));
+                jsonObject.put("recorded_at", rs.getLong("time"));
                 jsonObject.put("ruangan", rs.getString("room"));
                 jsonArray.put(jsonObject);
 

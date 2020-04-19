@@ -1,5 +1,7 @@
 package id.ac.itb.students.pppmbkpdb;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import fpm10a.FingerprintSensor;
 import fpm10a.HumanActionListener;
@@ -204,12 +206,20 @@ public class Controller {
                 unsyncedRecords = jsonArray.length();
 
                 if(unsyncedRecords > 0) {
-                    String response = Unirest.post(POST_URL)
-                            .field("password", POST_PASSWORD)
-                            .field("json", jsonArray.toString())
-                            .asString().getBody();
+                    JSONObject jsonBody = new JSONObject();
+                    jsonBody.put("password", POST_PASSWORD);
+                    jsonBody.put("records", jsonArray);
 
-                    if (!response.equals("OK")) {
+                    String requestBody = jsonBody.toString();
+
+                    HttpResponse<JsonNode> response = Unirest.post(POST_URL.replace("{room}", ROOM_NUMBER))
+                        .header("Content-Type", "application/json")
+                        .body(requestBody)
+                        .asJson();
+
+                    System.out.println("Sync Response Code: " + response.getStatus());
+
+                    if (response.getStatus() != 200) {
                         System.out.println("Sync failed.");
                         return null;
                     }
